@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#Récupération des variables du fichier yaml avec le script de stefan
-
+#Retrieving variables from the yaml file
 function parse_yaml {
    local prefix=$2
    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
@@ -23,7 +22,7 @@ function parse_yaml {
 eval "$(parse_yaml /path/to/conf.yaml "CONF_")"
 
 
-# creation of the variable name according to the environment
+#creation of the variable name according to the environment
 
 ENV="dev"
 
@@ -42,4 +41,5 @@ declare amadminPassword=$CONF_PASSWORD_VAR
 CONF_REALM_VAR=CONF_${ENV}__Realm
 declare Realm=$CONF_REALM_VAR
 
+#Run the command to export authentication trees from vscheuber script
 "${!PATHAMTREE}" -s -r "${!Realm}" -h "${!urlAM}" -u "${!Login}" -p "${!amadminPassword}"
