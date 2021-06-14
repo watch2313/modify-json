@@ -84,6 +84,7 @@ for _filename in $(ls *.json); do
                                #We loop on the variables of the tree in question
                           for key in $currentTreeNodes; do
 
+                               #Retrieves the secret value of the attribute
                                currentkey=${!key}
                                
                                #Cut the CONF2_${currentTreeName}__${node}__ part to access the attributes directly
