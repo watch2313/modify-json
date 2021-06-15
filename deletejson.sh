@@ -11,8 +11,8 @@ if [ $# -ne 2 ]; then
 fi
 
 #3) check that the first yaml file exists
-   if [ ! -f $YAML1 ]; then
-        echo "File "$YAML1" does not exist"
+   if [ ! -f $YAML2 ]; then
+        echo "File "$YAML2" does not exist"
 fi
 
 #4) check that the JSON repository exists
