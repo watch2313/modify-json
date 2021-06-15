@@ -5,7 +5,7 @@ YAML2=$1
 JSON=$2
 
 #2) check that there is the right number of arguments
-if [ $# -ne 4 ]; then
+if [ $# -ne 2 ]; then
      echo "Incorrect number of arguments, syntax $0 "FILE" "ENV" "KEY""
      exit
 fi
