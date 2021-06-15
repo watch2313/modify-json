@@ -21,7 +21,7 @@ if [ ! -d $JSON ]; then
        echo "Le répertoire n'existe pas"
 fi
 
-#6) Read the yaml file
+#5) Read the yaml file
 
 function parse_yaml {
                         local prefix=$2
