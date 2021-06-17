@@ -21,7 +21,7 @@ function parse_yaml {
 }
 
 #Read the yaml file
-eval "$(parse_yaml /path/to/conf.yaml "CONF_")"
+eval "$(parse_yaml /path/to/conf.yaml "CONF1_")"
 
 
 #creation of the variable name according to the environment
