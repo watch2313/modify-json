@@ -29,19 +29,19 @@ eval "$(parse_yaml /path/to/conf1.yaml "CONF1_")"
 ENV="dev"
 
 #Path to vscheuber script that allows to export and import authentication trees, script link in README
-CONF_AMTREE_VAR=CONF_${ENV}__PATHAMTREE
+CONF_AMTREE_VAR=CONF_${ENV}_PATHAMTREE
 declare PATHAMTREE=$CONF_AMTREE_VAR
 
-CONF_URL_VAR=CONF_${ENV}__urlAM
+CONF_URL_VAR=CONF_${ENV}_urlAM
 declare urlAM=$CONF_URL_VAR
 
-CONF_LOGIN_VAR=CONF_${ENV}__Login
+CONF_LOGIN_VAR=CONF_${ENV}_Login
 declare Login=$CONF_LOGIN_VAR
 
-CONF_PASSWORD_VAR=CONF_${ENV}__amadminPassword
+CONF_PASSWORD_VAR=CONF_${ENV}_amadminPassword
 declare amadminPassword=$CONF_PASSWORD_VAR
 
-CONF_REALM_VAR=CONF_${ENV}__Realm
+CONF_REALM_VAR=CONF_${ENV}_Realm
 declare Realm=$CONF_REALM_VAR
 
 #Run the command to export authentication trees from vscheuber script
