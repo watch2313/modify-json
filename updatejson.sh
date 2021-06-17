@@ -19,13 +19,13 @@ fi
 
 #4) check that the second yaml file exists
  if [ ! -f $YAML2 ]; then
-                 echo "Le fichier "$YAML2" n'existe pas"
+                 echo "File "$YAML2" does not exist"
  fi
 
 #5) check that the JSON repository exists
 
 if [ ! -d $JSON ]; then
-       echo "Le répertoire n'existe pas"
+       echo "The "$JSON" directory does not exist"
 fi
 
 #6) Read the yaml file
