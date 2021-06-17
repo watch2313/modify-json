@@ -51,7 +51,7 @@ for _filename in $(ls *.json); do
         currentTreeName=$(jq -r ".tree._id" ${_filename})
 
         #search in the yaml2 if we find the name of the tree
-        isTreeInYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}__)
+        isTreeInYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}_)
 
         if [ $isTreeInYaml -gt 0 ]; then
 
@@ -65,19 +65,19 @@ for _filename in $(ls *.json); do
                        
                        for node in  $currentNodesNames; do
                         
-                        isNodeinYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}__${node}__)
+                        isNodeinYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}_${node}_)
                        
 
                        if [ $isNodeinYaml -gt 0 ]; then
                                
                                #List all the variables of the tree
-                            currentTreeNodes=$(compgen -A variable | grep  ^CONF2_${currentTreeName}__${node})
+                            currentTreeNodes=$(compgen -A variable | grep  ^CONF2_${currentTreeName}_${node}_)
                             
                                #We loop on the variables of the tree in question
                           for key in $currentTreeNodes; do
                                
-                               #Cut the CONF2_${currentTreeName}__${node}__ part to access the attributes directly
-                               keyName=$(echo $key | sed -e "s/^CONF2_${currentTreeName}__${node}__//")
+                               #Cut the CONF2_${currentTreeName}_${node}_ part to access the attributes directly
+                               keyName=$(echo $key | sed -e "s/^CONF2_${currentTreeName}_${node}_//")
                                
                                #retrieves the node id
                                id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
