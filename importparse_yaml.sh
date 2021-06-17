@@ -19,7 +19,7 @@ function parse_yaml {
 }
 
 
-eval "$(parse_yaml /path/to/conf.yaml "CONF_")"
+eval "$(parse_yaml /path/to/conf1.yaml "CONF1_")"
 
 
 #creation of the variable name according to the environment
