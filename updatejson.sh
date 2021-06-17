@@ -99,7 +99,7 @@ for _filename in $(ls *.json); do
           IFS="$OLDIFS"
 
 
-             #call the script getSecretValue and exchange currentValue with getSecretValue
+             #call the script getSecretValue and exchange currentkey with currentValue
              currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
              jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
 
