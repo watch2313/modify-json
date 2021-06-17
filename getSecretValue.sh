@@ -38,4 +38,4 @@ function parse_yaml {
 eval "$(parse_yaml $FILE "CONF1_")"
 
 #5) retrieve of the value of ENV.KEY
-secretvalue=CONF1_${ENV}__$KEY
+secretvalue=CONF1_${ENV}_$KEY
