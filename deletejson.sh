@@ -18,7 +18,7 @@ fi
 #4) check that the JSON repository exists
 
 if [ ! -d $JSON ]; then
-       echo "Le répertoire n'existe pas"
+       echo "The "$JSON" directory does not exist"
 fi
 
 #5) Read the yaml file
