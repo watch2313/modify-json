@@ -1,0 +1,35 @@
+myTree:
+  LDAP:
+   primaryServers: ldapserver1
+   adminDn: amadmin
+   adminPassword: amadminPassword
+   searchFilterAttributes: searchfilter
+   userProfileAttribute: userprofile
+   minimumPasswordLength: minpassword
+   accountSearchBaseDn: basedn
+  SAML2 Authentication:
+   authComparison: comparisonAuth
+   binding: bindParameter
+   requestBinding: bindRequest
+   idpEntityId: idpID
+   isPassive: Passive
+   metaAlias: SPAlias
+   forceAuthn: Authn
+   sloEnabled: slo
+   nameIdFormat: idFormat
+   allowCreate: createNameId
+
+myTree2:
+  OTP Collector Decision:
+   passwordExpiryTime: pwdExpiry
+  HOTP Generator:
+   length: pwdLength
+  OTP Email Sender:
+   hostName: NameHost
+   emailAttribute: Attribute
+   hostPort: PortHost
+   smsGatewayImplementationClass: GatewaySms
+   sslOption: Ssl
+   fromEmailAddress: AdressEmail
+   username: User
+   password: PWD
