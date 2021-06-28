@@ -8,9 +8,9 @@ JSON=$4
 
 
 #2) Determine to run the script as delete or update
-if [ $# -ne == 2 ]; then
+if [ $# -ne 2 ]; then
      echo "This script is for deleting data in the JSON files"
-elif [ $# -ne == 4 ]; then 
+elif [ $# -ne 4 ]; then 
      echo "This script is for adding data in the JSON files"
 else
      exit
@@ -97,14 +97,14 @@ for _filename in $(ls *.json); do
                                #retrieves the node id
                                id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
                              
-                               #Choose between deleting the data and updating it
+                               #Choose between deleting the data and adding it
                                if [ $# == 2 ]; then
                                
                                     #Delete the data of the JSON file
                                     jq  ".\"nodes\".\"$id\".\"$keyName\"=\"null\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
 
                               elif [ $# == 4 ]; then
-                               
+                               #Add the data
                                #Change the data of the JSON files with the secret values of the second yaml file 
                                jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentkey\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
 
