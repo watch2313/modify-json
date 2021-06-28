@@ -7,7 +7,7 @@ myTree:
    userProfileAttribute: userprofile
    minimumPasswordLength: minpassword
    accountSearchBaseDn: basedn
-  SAML2 Authentication:
+   SAML2 Authentication:
    authComparison: comparisonAuth
    binding: bindParameter
    requestBinding: bindRequest
@@ -22,9 +22,9 @@ myTree:
 myTree2:
   OTP Collector Decision:
    passwordExpiryTime: pwdExpiry
-  HOTP Generator:
+   HOTP Generator:
    length: pwdLength
-  OTP Email Sender:
+   OTP Email Sender:
    hostName: NameHost
    emailAttribute: Attribute
    hostPort: PortHost
