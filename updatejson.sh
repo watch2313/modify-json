@@ -5,11 +5,14 @@ YAML1=$1
 YAML2=$2
 ENV=$3
 JSON=$4
-CHOICE=$5
 
-#2) check that there is the right number of arguments
-if [ $# -ne 5 ]; then
-     echo "Incorrect number of arguments, syntax $0 "FILE" "ENV" "KEY""
+
+#2) Determine to run the script as delete or update
+if [ $# -ne 2 ]; then
+     echo "This script is for deleting data in the JSON files"
+elif [ $# -ne 4 ]; then 
+     echo "This script is for adding data in the JSON files"
+else
      exit
 fi
 
@@ -95,11 +98,12 @@ for _filename in $(ls *.json); do
                                id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
                              
                                #Choose between deleting the data and updating it
-                               if [ $CHOICE == 1 ]; then
-                                    
+                               if [ $# == 2 ]; then
+                               
+                                    #Delete the data of the JSON file
                                     jq  ".\"nodes\".\"$id\".\"$keyName\"=\"null\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
 
-                              elif [ $CHOICE == 2 ]; then
+                              elif [ $# == 4 ]; then
                                
                                #Change the data of the JSON files with the secret values of the second yaml file 
                                jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentkey\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
@@ -110,7 +114,7 @@ for _filename in $(ls *.json); do
              #call the script getSecretValue and exchange currentkey with currentValue
              currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
              jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
-
+          
            fi
           done
                        fi
