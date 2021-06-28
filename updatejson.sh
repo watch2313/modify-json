@@ -5,9 +5,10 @@ YAML1=$1
 YAML2=$2
 ENV=$3
 JSON=$4
+CHOICE=$5
 
 #2) check that there is the right number of arguments
-if [ $# -ne 4 ]; then
+if [ $# -ne 5 ]; then
      echo "Incorrect number of arguments, syntax $0 "FILE" "ENV" "KEY""
      exit
 fi
@@ -92,6 +93,13 @@ for _filename in $(ls *.json); do
                                
                                #retrieves the node id
                                id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
+                             
+                               #Choose between deleting the data and updating it
+                               if [ $CHOICE == 1 ]; then
+                                    
+                                    jq  ".\"nodes\".\"$id\".\"$keyName\"=\"null\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+
+                              elif [ $CHOICE == 2 ]; then
                                
                                #Change the data of the JSON files with the secret values of the second yaml file 
                                jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentkey\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
@@ -103,7 +111,7 @@ for _filename in $(ls *.json); do
              currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
              jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
 
-
+           fi
           done
                        fi
 
