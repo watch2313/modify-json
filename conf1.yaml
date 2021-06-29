@@ -1,3 +1,14 @@
+
+environment1:
+  key1: secret value for attribute1 in environment1 
+  key2: secret value for attribute2 in environment1 
+environment2:
+  key1: secret value for attribute1 in environment2 
+  key2: secret value for attribute2 in environment2 
+
+
+
+#Example
 dev:
   urlAM: 'http://yourdevdomain.name/am'
   PATHAMTREE: '/path/to/amtree_v2.sh'
