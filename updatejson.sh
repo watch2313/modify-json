@@ -8,9 +8,9 @@ JSON=$4
 
 
 #2) Determine to run the script as delete or update
-if [ $# -ne 2 ]; then
+if [ $# -e 2 ]; then
      echo "This script is for deleting data in the JSON files"
-elif [ $# -ne 4 ]; then 
+elif [ $# -e 4 ]; then 
      echo "This script is for adding data in the JSON files"
 else
      exit
