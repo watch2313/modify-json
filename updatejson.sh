@@ -58,67 +58,68 @@ eval "$(parse_yaml $YAML2 "CONF2_")"
 cd "$JSON"
 for _filename in $(ls *.json); do
 
-        #search if the file name "_filename" is listed in the yaml2 file
-        #get the name of the current file tree with the right jq command
-        currentTreeName=$(jq -r ".tree._id" ${_filename})
+    #search if the file name "_filename" is listed in the yaml2 file
+    #get the name of the current file tree with the right jq command
+    currentTreeName=$(jq -r ".tree._id" ${_filename})
 
-        #search in the yaml2 if we find the name of the tree
-        isTreeInYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}_)
+    #search in the yaml2 if we find the name of the tree
+    isTreeInYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}_)
 
-        if [ $isTreeInYaml -gt 0 ]; then
+    if [ $isTreeInYaml -gt 0 ]; then
 
-                       #loop on CONF2_${currentTreeName}_ variables to get the node name
-                       #get the node id in the current file with the right jq command
+       #loop on CONF2_${currentTreeName}_ variables to get the node name
+       #get the node id in the current file with the right jq command
 
-                        OLDIFS="$IFS"
-                        IFS=$'\n' # bash specific
+       OLDIFS="$IFS"
+       IFS=$'\n' # bash specific
 
-                        currentNodesNames=$(jq -r ".tree.nodes[].displayName" ${_filename})
+       currentNodesNames=$(jq -r ".tree.nodes[].displayName" ${_filename})
                        
-                        for node in  $currentNodesNames; do
+       for node in  $currentNodesNames; do
                         
-                           isNodeinYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}_${node}_)
+           isNodeinYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}_${node}_)
                                
-                               if [ $isNodeinYaml -gt 0 ]; then
+           if [ $isNodeinYaml -gt 0 ]; then
                                
-                                  #List all the variables of the tree
-                                  currentTreeNodes=$(compgen -A variable | grep  ^CONF2_${currentTreeName}_${node}_)
+              #List all the variables of the tree
+              currentTreeNodes=$(compgen -A variable | grep  ^CONF2_${currentTreeName}_${node}_)
                             
-                                  #We loop on the variables of the tree in question
-                                   for key in $currentTreeNodes; do
+              #We loop on the variables of the tree in question
+              for key in $currentTreeNodes; do
 
-                                         #Retrieves the secret value of the attribute
-                                         currentkey=${!key}
+                  #Retrieves the secret value of the attribute
+                  currentkey=${!key}
                                
-                                         #Cut the CONF2_${currentTreeName}_${node}_ part to access the attributes directly
-                                         keyName=$(echo $key | sed -e "s/^CONF2_${currentTreeName}_${node}_//")
+                  #Cut the CONF2_${currentTreeName}_${node}_ part to access the attributes directly
+                  keyName=$(echo $key | sed -e "s/^CONF2_${currentTreeName}_${node}_//")
                                
-                                         #retrieves the node id
-                                         id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
+                  #retrieves the node id
+                  id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
                              
-                                         #Choose between deleting the data and adding it
-                                         if [ $# -le 2 ]; then
+                  #Choose between deleting the data and adding it
+                  if [ $# -le 2 ]; then
                                
-                                              #Delete the data of the JSON file
-                                              jq  ".\"nodes\".\"$id\".\"$keyName\"=\"null\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                      #Delete the data of the JSON file
+                      jq  ".\"nodes\".\"$id\".\"$keyName\"=\"null\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
 
-                                         elif [ $# -le 4 ]; then
-                                             #Add the data
-                                             #Change the data of the JSON files with the secret values of the second yaml file 
-                                             jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentkey\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                   elif [ $# -le 4 ]; then
+                        #Add the data
+                        #Change the data of the JSON files with the secret values of the second yaml file 
+                        jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentkey\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
                                              
-                                            #call the script getSecretValue and exchange currentkey with currentValue
-                                            currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
-                                            jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
-                                            IFS="$OLDIFS"
+                        #call the script getSecretValue and exchange currentkey with currentValue
+                        currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
+                        jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                        IFS="$OLDIFS"
           
-                                         fi
-                                 done
-                       fi
-
-
-               done
-
+                    fi
+                    
+             done
+             
         fi
-        
+
+    done
+    
+ fi
+       
 done
