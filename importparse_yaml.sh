@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CHOICE=$1
+
 #Retrieving variables from the yaml file
 function parse_yaml {
    local prefix=$2
@@ -41,5 +43,15 @@ declare amadminPassword=$CONF_PASSWORD_VAR
 CONF_REALM_VAR=CONF_${ENV}_Realm
 declare Realm=$CONF_REALM_VAR
 
-#Run the command to export authentication trees from vscheuber script
-"${!PATHAMTREE}" -s -r "${!Realm}" -h "${!urlAM}" -u "${!Login}" -p "${!amadminPassword}"
+if [ $CHOICE == "import" ]; then
+    #Run the command to import authentication trees from vscheuber script
+    "${!PATHAMTREE}" -s -r "${!Realm}" -h "${!urlAM}" -u "${!Login}" -p "${!amadminPassword}"
+    
+ elif [ $CHOICE == "export"]; then
+     #Run the command to export authentication trees from vscheuber script
+    "${!PATHAMTREE}" -S -r "${!Realm}" -h "${!urlAM}" -u "${!Login}" -p "${!amadminPassword}"
+    
+else 
+     exit
+fi 
+    
