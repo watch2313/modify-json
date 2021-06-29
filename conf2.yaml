@@ -1,3 +1,18 @@
+
+tree1:
+ node1:
+  attribute1: [...]
+  attribute2: [...]
+ node2:
+  [...]
+ node3:
+  [...]
+  
+tree2:
+ [...]
+
+
+#Example
 myTree:
   LDAP:
    primaryServers: ldapserver1
