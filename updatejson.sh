@@ -17,19 +17,19 @@ else
 fi
 
 #3) check that the first yaml file exists
-   if [ ! -f $YAML1 ]; then
-        echo "File "$YAML1" does not exist"
+if [ ! -f $YAML1 ]; then
+   echo "File "$YAML1" does not exist"
 fi
 
 #4) check that the second yaml file exists
  if [ ! -f $YAML2 ]; then
-                 echo "File "$YAML2" does not exist"
+    echo "File "$YAML2" does not exist"
  fi
 
 #5) check that the JSON repository exists
 
 if [ ! -d $JSON ]; then
-       echo "The "$JSON" directory does not exist"
+   echo "The "$JSON" directory does not exist"
 fi
 
 #6) Read the yaml file
@@ -44,10 +44,10 @@ function parse_yaml {
                                  indent = length($1)/2;
                                  vname[indent] = $2;
                                  for (i in vname) {if (i > indent) {delete vname[i]}}
-                                         if (length($3) > 0) {
-                                                  vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-                                                  printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-                                  }
+                                      if (length($3) > 0) {
+                                          vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+                                          printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+                                     }
             }'
 }
 
@@ -75,52 +75,49 @@ for _filename in $(ls *.json); do
 
                         currentNodesNames=$(jq -r ".tree.nodes[].displayName" ${_filename})
                        
-                       for node in  $currentNodesNames; do
+                        for node in  $currentNodesNames; do
                         
-                        isNodeinYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}_${node}_)
-                       
-
-                       if [ $isNodeinYaml -gt 0 ]; then
+                           isNodeinYaml=$(compgen -A variable | grep -c ^CONF2_${currentTreeName}_${node}_)
                                
-                               #List all the variables of the tree
-                            currentTreeNodes=$(compgen -A variable | grep  ^CONF2_${currentTreeName}_${node}_)
+                               if [ $isNodeinYaml -gt 0 ]; then
+                               
+                                  #List all the variables of the tree
+                                  currentTreeNodes=$(compgen -A variable | grep  ^CONF2_${currentTreeName}_${node}_)
                             
-                               #We loop on the variables of the tree in question
-                          for key in $currentTreeNodes; do
+                                  #We loop on the variables of the tree in question
+                                   for key in $currentTreeNodes; do
 
-                               #Retrieves the secret value of the attribute
-                               currentkey=${!key}
+                                         #Retrieves the secret value of the attribute
+                                         currentkey=${!key}
                                
-                               #Cut the CONF2_${currentTreeName}_${node}_ part to access the attributes directly
-                               keyName=$(echo $key | sed -e "s/^CONF2_${currentTreeName}_${node}_//")
+                                         #Cut the CONF2_${currentTreeName}_${node}_ part to access the attributes directly
+                                         keyName=$(echo $key | sed -e "s/^CONF2_${currentTreeName}_${node}_//")
                                
-                               #retrieves the node id
-                               id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
+                                         #retrieves the node id
+                                         id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
                              
-                               #Choose between deleting the data and adding it
-                               if [ $# -le 2 ]; then
+                                         #Choose between deleting the data and adding it
+                                         if [ $# -le 2 ]; then
                                
-                                    #Delete the data of the JSON file
-                                    jq  ".\"nodes\".\"$id\".\"$keyName\"=\"null\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                                              #Delete the data of the JSON file
+                                              jq  ".\"nodes\".\"$id\".\"$keyName\"=\"null\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
 
-                              elif [ $# -le 4 ]; then
-                               #Add the data
-                               #Change the data of the JSON files with the secret values of the second yaml file 
-                               jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentkey\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
-
-          IFS="$OLDIFS"
-
-
-             #call the script getSecretValue and exchange currentkey with currentValue
-             currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
-             jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                                         elif [ $# -le 4 ]; then
+                                             #Add the data
+                                             #Change the data of the JSON files with the secret values of the second yaml file 
+                                             jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentkey\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                                             
+                                            #call the script getSecretValue and exchange currentkey with currentValue
+                                            currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
+                                            jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                                            IFS="$OLDIFS"
           
-           fi
-          done
+                                         fi
+                                 done
                        fi
 
 
-done
+               done
 
         fi
         
