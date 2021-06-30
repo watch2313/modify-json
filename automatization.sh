@@ -47,7 +47,7 @@ if [ "$CHOICE" == "import" ]; then
     #Run the command to import authentication trees from vscheuber script
     "${!PATHAMTREE}" -s -r "${!Realm}" -h "${!urlAM}" -u "${!Login}" -p "${!amadminPassword}"
     
- elif [ "$CHOICE" == "export" ]; then
+elif [ "$CHOICE" == "export" ]; then
      #Run the command to export authentication trees from vscheuber script
     "${!PATHAMTREE}" -S -r "${!Realm}" -h "${!urlAM}" -u "${!Login}" -p "${!amadminPassword}"
     
