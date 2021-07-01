@@ -1,16 +1,16 @@
 #!/bin/bash
 
 #1) retrieving command line arguments in variables
-YAML1=$1
-YAML2=$2
-ENV=$3
-JSON=$4
-
+MODE=$1
+JSON=$2
+YAML2=$3
+YAML1=$4
+ENV=$5
 
 #2) Determine to run the script as delete or update
-if [ $# -le 2 ]; then
+if [ $# -le 3 ]; then
      echo "This script is for deleting data in the JSON files"
-elif [ $# -le 4 ]; then 
+elif [ $# -le 5 ]; then 
      echo "This script is for adding data in the JSON files"
 else
      exit
@@ -97,12 +97,12 @@ for _filename in $(ls *.json); do
                   id=$(jq -rc --arg nodeName $node '.tree.nodes  |to_entries[]| select(.value.displayName==$nodeName)| .key' $_filename)
                              
                   #Choose between deleting the data and adding it
-                  if [ $# -le 2 ]; then
+                  if [ "$MODE" == "delete" ]; then
                                
                       #Delete the data of the JSON file
                       jq  ".\"nodes\".\"$id\".\"$keyName\"=\"null\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
 
-                   elif [ $# -le 4 ]; then
+                   elif [ "$MODE" == "add" ]; then
                         #Add the data
                         #Change the data of the JSON files with the secret values of the second yaml file 
                         jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentkey\"" $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
