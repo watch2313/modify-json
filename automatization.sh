@@ -1,6 +1,7 @@
 #!/bin/bash
 
-CHOICE=$1
+ENV=$1
+CHOICE=$2
 
 #Retrieving variables from the yaml file
 function parse_yaml {
