@@ -13,7 +13,7 @@ fi
 
 #3) check that the file exists
    if [! -f $FILE ]; then
-       echo "The file "$FILE" does not exist"
+       echo "The file $FILE does not exist"
    fi
 
 #4) Reading the yaml file
