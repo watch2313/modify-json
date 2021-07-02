@@ -12,7 +12,7 @@ if [ $# -ne 3 ]; then
 fi
 
 #3) check that the file exists
-   if [! -f $FILE ]; then
+   if [! -f "$FILE" ]; then
        echo "The file $FILE does not exist"
    fi
 
