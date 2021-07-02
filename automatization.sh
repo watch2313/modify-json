@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ENV=$1
-CHOICE=$2
+MODE=$2
 
 #Retrieving variables from the yaml file
 function parse_yaml {
@@ -27,7 +27,6 @@ eval "$(parse_yaml /path/to/conf1.yaml "CONF_")"
 
 #creation of the variable name according to the environment
 
-ENV="dev"
 
 CONF_AMTREE_VAR=CONF_${ENV}_PATHAMTREE
 declare PATHAMTREE=$CONF_AMTREE_VAR
@@ -44,11 +43,11 @@ declare amadminPassword=$CONF_PASSWORD_VAR
 CONF_REALM_VAR=CONF_${ENV}_Realm
 declare Realm=$CONF_REALM_VAR
 
-if [ "$CHOICE" == "import" ]; then
+if [ "$MODE" == "import" ]; then
     #Run the command to import authentication trees from vscheuber script
     "${!PATHAMTREE}" -s -r "${!Realm}" -h "${!urlAM}" -u "${!Login}" -p "${!amadminPassword}"
     
-elif [ "$CHOICE" == "export" ]; then
+elif [ "$MODE" == "export" ]; then
      #Run the command to export authentication trees from vscheuber script
     "${!PATHAMTREE}" -S -r "${!Realm}" -h "${!urlAM}" -u "${!Login}" -p "${!amadminPassword}"
     
