@@ -17,7 +17,7 @@ else
 fi
 
 #3) check that the first yaml file exists
-if [ ! -f $YAML1 ]; then
+if [ ! -f "$YAML1" ]; then
    echo "File $YAML1 does not exist"
 fi
 
