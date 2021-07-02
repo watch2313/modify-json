@@ -22,13 +22,13 @@ if [ ! -f $YAML1 ]; then
 fi
 
 #4) check that the second yaml file exists
- if [ ! -f $YAML2 ]; then
+ if [ ! -f "$YAML2" ]; then
     echo "File $YAML2 does not exist"
  fi
 
 #5) check that the JSON repository exists
 
-if [ ! -d $JSON ]; then
+if [ ! -d "$JSON" ]; then
    echo "The $JSON directory does not exist"
 fi
 
