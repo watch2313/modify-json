@@ -20,14 +20,14 @@ fi
 
 #Copy the automation script 
 if [ -f "$PATH_AUTOMATIZATION" ]; then
-   echo "The copy has already been made "
+   echo "The copy of automatization.sh has already been made "
 else
    cp "$AUTOMATIZATION_SCRIPT" "$PATH_JENKINS"
 fi
 
 #Copy the update script
 if [ -f $PATH_UPDATE ]; then
-   echo "The copy has already been made "
+   echo "The copy of update.sh has already been made "
 else
    cp "$UPDATE_SCRIPT" "$PATH_JENKINS"
 fi
