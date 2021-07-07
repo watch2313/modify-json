@@ -6,8 +6,8 @@ AUTOMATIZATION_SCRIPT="${PATH_FOLDER}/script/automatization.sh"
 UPDATE_SCRIPT="${PATH_FOLDER}/script/updatejson.sh"
 PATH_AUTOMATIZATION="${PATH_JENKINS}/automatization.sh"
 PATH_UPDATE="${PATH_JENKINS}/updatejson.sh"
-EXECUTE_AUTOMATIZATION="${PATH_AUTOMATIZATION} $ENV $FUNCTION"
-EXECUTE_UPDATE="${PATH_UPDATE} $MODE $JSON $YAML2"
+EXECUTE_AUTOMATIZATION=${PATH_AUTOMATIZATION} "$ENV" "$FUNCTION"
+EXECUTE_UPDATE=${PATH_UPDATE} "$MODE" "$JSON" "$YAML2"
 GIT_CLONE="git@gitlab.com:user/repository.git"
 
 
@@ -35,10 +35,10 @@ fi
 
 #Export all am trees in this directory
 cd "$PATH_JENKINS"
-"$EXECUTE_AUTOMATIZATION"
+source "$EXECUTE_AUTOMATIZATION"
 
 #Remove sensitive data from json files 
-"$EXECUTE_UPDATE"
+source "$EXECUTE_UPDATE"
 
 #Push to git
 git pull origin main
