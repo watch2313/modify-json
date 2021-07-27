@@ -109,8 +109,11 @@ for _filename in $(ls *.json); do
                                              
                         #call the script getSecretValue and exchange currentkey with currentValue
                         currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
-                        jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
-                        IFS="$OLDIFS"
+                        if [ "$keyName" == "minimumPasswordLength" ]; then
+                             jq  ".\"nodes\".\"$id\".\"$keyName\"=$currentValue"  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                        else
+                             jq  ".\"nodes\".\"$id\".\"$keyName\"=\"$currentValue\""  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
+                        fi
           
                     fi
                     
