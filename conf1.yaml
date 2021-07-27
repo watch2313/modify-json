@@ -1,10 +1,10 @@
 
 environment1:
-  key1: secret value for attribute1 in environment1 
-  key2: secret value for attribute2 in environment1 
+  key1: secrete value for attribute1 in environment1 
+  key2: secrete value for attribute2 in environment1 
 environment2:
-  key1: secret value for attribute1 in environment2 
-  key2: secret value for attribute2 in environment2 
+  key1: secrete value for attribute1 in environment2 
+  key2: secrete value for attribute2 in environment2 
 
 
 
@@ -27,21 +27,21 @@ dev:
   bindRequest: 'HTTP_POST'
   idpID: 'test.dev'
   passive: 'false'
-  SPAlias: '/Test/IAMShowcase'
+  spAlias: '/Test/IAMShowcase'
   idFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'
   authn: 'false'
   slo: 'false'
   createNameId: 'true'
   pwdExpiry: '5'
   pwdLength: '8'
-  NameHost: 'mail.example.com'
+  nameHost: 'mail.example.com'
   attribute: 'mail'
   portHost: '25'
   gatewaySms: 'com.sun.identity.authentication.modules.hotp.DefaultSMSGatewayImpl'
   ssl: 'SSL'
   adressEmail: 'admin@example.com'
   user: 'admin@example.com'
-  PWD: 'null'
+  pwd: 'null'
   
 
 
@@ -63,7 +63,7 @@ preprod:
   bindRequest: 'HTTP_Artifact'
   idpID: 'test.preprod'
   passive: 'true'
-  SPAlias: '/preprodrealm/IAMShowcase'
+  spAlias: '/preprodrealm/IAMShowcase'
   idFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'
   authn: 'true'
   slo: 'true'
@@ -77,4 +77,4 @@ preprod:
   ssl: 'SSL'
   adressEmail: 'preprod@example.com'
   user: 'preprod@example.com'
-  PWD: 'toto'
+  pwd: 'toto'
