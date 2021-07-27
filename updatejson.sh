@@ -7,6 +7,9 @@ YAML2=$3
 YAML1=$4
 ENV=$5
 
+#We need the parse_yaml.sh script wich contains the function that parses the yaml files
+source /path/to/parse_yaml.sh
+
 #2) Determine to run the script as delete or update
 if [ $# -le 3 ]; then
      echo "This script is for deleting data in the JSON files"
@@ -32,25 +35,7 @@ if [ ! -d "$JSON" ]; then
    echo "The $JSON directory does not exist"
 fi
 
-#6) Read the yaml file
-
-function parse_yaml {
-   local prefix=$2
-   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
-   sed -ne "s|^\($s\):|\1|"  \
-        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
-    awk -F$fs '{
-       indent = length($1)/2;
-       vname[indent] = $2;
-       for (i in vname) {if (i > indent) {delete vname[i]}}
-           if (length($3) > 0) {
-               vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-               printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-       }
-   }'
-}
-
+#6) Read the yaml file, the function is in the parse_yaml.sh script
 eval "$(parse_yaml $YAML2 "CONF2_")"
 
 
@@ -109,6 +94,8 @@ for _filename in $(ls *.json); do
                                              
                         #call the script getSecretValue and exchange currentkey with currentValue
                         currentValue=$($JSON/getSecretValue.sh "$YAML1" "$ENV" "$currentkey")
+                        
+                        #Remove double quotes from the value of minimumPasswordLength because it is an integer 
                         if [ "$keyName" == "minimumPasswordLength" ]; then
                              jq  ".\"nodes\".\"$id\".\"$keyName\"=$currentValue"  $_filename > ${_filename}.tmp && mv ${_filename}.tmp ${_filename}
                         else
