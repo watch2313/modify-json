@@ -15,21 +15,21 @@ tree2:
 #Example
 myTree:
   LDAP:
-   primaryServers: ldapserver1
-   adminDn: amadmin
+   primaryServers: ldapServer1
+   adminDn: amAdmin
    adminPassword: amadminPassword
-   searchFilterAttributes: searchfilter
-   userProfileAttribute: userprofile
-   minimumPasswordLength: minpassword
-   accountSearchBaseDn: basedn
+   searchFilterAttributes: searchFilter
+   userProfileAttribute: userProfile
+   minimumPasswordLength: minPassword
+   accountSearchBaseDn: baseDn
   SAML2 Authentication:
    authComparison: comparisonAuth
    binding: bindParameter
    requestBinding: bindRequest
    idpEntityId: idpID
-   isPassive: Passive
-   metaAlias: SPAlias
-   forceAuthn: Authn
+   isPassive: passive
+   metaAlias: spAlias
+   forceAuthn: authn
    sloEnabled: slo
    nameIdFormat: idFormat
    allowCreate: createNameId
@@ -40,11 +40,11 @@ myTree2:
   HOTP Generator:
    length: pwdLength
   OTP Email Sender:
-   hostName: NameHost
-   emailAttribute: Attribute
-   hostPort: PortHost
-   smsGatewayImplementationClass: GatewaySms
-   sslOption: Ssl
-   fromEmailAddress: AdressEmail
-   username: User
-   password: PWD
+   hostName: nameHost
+   emailAttribute: attribute
+   hostPort: portHost
+   smsGatewayImplementationClass: gatewaySms
+   sslOption: ssl
+   fromEmailAddress: adressEmail
+   username: user
+   password: pwd
