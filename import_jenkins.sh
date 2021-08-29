@@ -12,6 +12,9 @@ EXECUTE_AUTOMATIZATION="${PATH_AUTOMATIZATION} $ENV $FUNCTION"
 EXECUTE_UPDATE="${PATH_UPDATE} $MODE $JSON $YAML2 $YAML1 $ENV"
 GIT_CLONE="git@gitlab.com:user/repository.git"
 
+source "$EXECUTE_UPDATE"
+source "$EXECUTE_AUTOMATIZATION"
+
 #Check the automation repository clone 
 if [ -d $PATH_JENKINS ]; then
     echo "The directory already exists"
