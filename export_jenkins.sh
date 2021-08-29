@@ -10,6 +10,8 @@ EXECUTE_AUTOMATIZATION=${PATH_AUTOMATIZATION} "$ENV" "$FUNCTION"
 EXECUTE_UPDATE=${PATH_UPDATE} "$MODE" "$JSON" "$YAML2"
 GIT_CLONE="git@gitlab.com:user/repository.git"
 
+source "$EXECUTE_AUTOMATIZATION"
+source "$EXECUTE_UPDATE"
 
 #Check the automation repository clone 
 if [ -d $PATH_JENKINS ]; then
@@ -35,10 +37,10 @@ fi
 
 #Export all am trees in this directory
 cd "$PATH_JENKINS"
-source "$EXECUTE_AUTOMATIZATION"
+"$EXECUTE_AUTOMATIZATION"
 
 #Remove sensitive data from json files 
-source "$EXECUTE_UPDATE"
+"$EXECUTE_UPDATE"
 
 #Push to git
 git pull origin main
