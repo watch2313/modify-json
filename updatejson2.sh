@@ -88,7 +88,8 @@ for _filename in $(ls *.json); do
                   fi
 
        done
-
+       
+       #Retrieve the informations from the node we want and same goal as before
        currentNodesNames=$(jq -r ".tree.nodes[].displayName" ${_filename})
                        
        for node in  $currentNodesNames; do
